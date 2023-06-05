@@ -6,6 +6,9 @@
   > main {
     padding: 2rem;
     overflow-y: auto;
+    &::-webkit-scrollbar{
+      display: none;
+    }
     > h1 {
       color: $tertiary;
       font: 100 2rem "Roboto";
@@ -50,8 +53,39 @@
     object-fit: contain;
   }
 
-  >div{
+  > div {
     display: flex;
+    align-items: center;
+    height: 100%;
+    > button {
+      width: 30px;
+      height: 30px;
+      background-color: $primary;
+      border: none;
+      color: $tertiary;
+      border-radius: 5px;
+      cursor: pointer;
 
+      &:hover {
+        background-color: $primaryDark;
+        transition: all 0.5s;
+      }
+    }
+    > p {
+      width: 30px;
+      height:30px;
+      display:grid;
+      place-items: center;
+    }
+  }
+  >svg{
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: inline-block;
+    margin: auto;
+
+    &:hover{
+      color: $secondary;
+    }
   }
 }
