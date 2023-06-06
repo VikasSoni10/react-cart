@@ -1,49 +1,55 @@
 import React from "react";
 import { AiFillDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
+  const { cartItems, subTotal, shipping, tax, total } = useSelector((state) => state.cart);
+  const dispatch= useDispatch();
+
+  const increament  = (id)=>{
+    dispatch({type:"addToCart", payload:{id}});
+    dispatch({type:"calculatePrice"})
+  }
+
+  const decreament = (id)=>{
+    dispatch({type:"decreament", payload:id})
+    dispatch({type:"calculatePrice"})
+
+  }
+
+  const deleteHandler = (id)=>{
+    dispatch({type:"deleteFromCart", payload:id})
+    dispatch({type:"calculatePrice"})
+
+  }
+
+
   return (
     <div className="cart">
       <main>
-        <CartItem
-          name={"MacBook"}
-          id={"hbhb"}
-          imgSrc={
-            "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg"}
-            price={122330}
-            qty={1}
-        />
-        <CartItem
-        name={"MacBook"}
-        id={"hbhb"}
-        imgSrc={
-          "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg"}
-          price={122330}
-          qty={1}
-      />
-      <CartItem
-          name={"MacBook"}
-          id={"hbhb"}
-          imgSrc={
-            "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg"}
-            price={122330}
-            qty={1}
-        />
-        <CartItem
-          name={"MacBook"}
-          id={"hbhb"}
-          imgSrc={
-            "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg"}
-            price={122330}
-            qty={1}
-        />
-        
+        {cartItems.length > 0 ? (
+          cartItems.map((i) => (
+            <CartItem
+              key={i.id}
+              name={i.name}
+              id={i.id}
+              imgSrc={i.imgSrc}
+              price={i.price}
+              qty={i.quantity}
+              decreament={decreament}
+              increament={increament}
+              deleteHandler={deleteHandler}
+            />
+          ))
+        ) : (
+          <h1>No Items Yet</h1>
+        )}
       </main>
       <aside>
-        <h2>Subtotal: ${2000}</h2>
-        <h2>Shipping: ${200}</h2>
-        <h2>Tax: ${20}</h2>
-        <h2>Total: ${1230}</h2>
+        <h2>Subtotal: ${subTotal}</h2>
+        <h2>Shipping: ${shipping}</h2>
+        <h2>Tax: ${tax}</h2>
+        <h2>Total: ${total}</h2>
       </aside>
     </div>
   );
